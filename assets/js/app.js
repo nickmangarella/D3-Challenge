@@ -217,7 +217,7 @@ d3.csv("/data/data.csv").then(function(healthData, err) {
     .on("click", function() {
       
         // Get value of selection
-      var xValue = d3.select(this).attr("value");
+      var value = d3.select(this).attr("value");
       if (value !== chosenXAxis) {
 
         // Replace chosenXAxis with the value
@@ -255,6 +255,50 @@ d3.csv("/data/data.csv").then(function(healthData, err) {
         }
       }
     });
+
+  // Y-axis labels event listener
+  yLabelsGroup.selectAll("text")
+    .on("click", function() {
+    
+      // Get value of selection
+      var value = d3.select(this).attr("value");
+      if (value !== chosenYAxis) {
+
+      // Replace chosenXAxis with the value
+      chosenYAxis = value;
+      console.log(chosenYAxis);
+
+      // Update the xScale for new data
+      yLinearScale = yScale(healthData, chosenyAxis);
+
+      // Update x-axis with transition
+      yAxis = renderyAxis(yLinearScale, yAxis);
+
+      // Update circles with new x values
+      circlesGroup = renderCircles(circlesGroup, yLinearScale, chosenYAxis);
+
+      // Update tooltips with new info
+      circlesGroup = updateToolTip(chosenYAxis, circlesGroup);
+
+      // Change classes to change bold text
+      if (chosenYAxis === "age") {
+        smokesLabel
+          .classed("active", true)
+          .classed("inactive", false);
+        healthcareLabel
+          .classed("active", false)
+          .classed("inactive", true);
+      }
+      else {
+        smokesLabel
+          .classed("active", false)
+          .classed("inactive", true);
+        healthcareLabel
+          .classed("active", true)
+          .classed("inactive", false);
+      }
+    }
+  });
 }).catch(function(error) {
     console.log(error);
 });
