@@ -28,30 +28,30 @@ var chosenXAxis = "poverty";
 var chosenYAxis = "healthcare";
 
 // Function that updates the x-scale var by clicking on the axis label
-function xScale(healthData, chosenXAxis) {
+function xScale(censusData, chosenXAxis) {
 
   // Create scales
   var xLinearScale = d3.scaleLinear()
-    .domain([d3.min(healthData, d => d[chosenXAxis]) * 0.8,
-    d3.max(healthData, d => d[chosenXAxis]) * 1.2])
+    .domain([d3.min(censusData, d => d[chosenXAxis]) * 0.8,
+    d3.max(censusData, d => d[chosenXAxis]) * 1.2])
     .range([0, width]);
     
   return xLinearScale;
 }
 
 // Function that updates the y-scale by clicking on the axis label
-function yScale(healthData, chosenYAxis) {
+function yScale(censusData, chosenYAxis) {
     
   // Create scales
-  var YLinearScale = d3.scaleLinear()
-    .domain([d3.min(healthData, d => d[chosenYAxis]) * 0.8,
-    d3.max(healthData, d => d[chosenYAxis]) * 1.2])
+  var yLinearScale = d3.scaleLinear()
+    .domain([d3.min(censusData, d => d[chosenYAxis]) * 0.8,
+    d3.max(censusData, d => d[chosenYAxis]) * 1.2])
     .range([height, 0]);
     
   return yLinearScale;
 }
 
-// Function that updates both axes by clicking on either axis label
+// Function that updates both axes by clicking on either y-axis label
 function renderXAxis(newXScale, xAxis) {
   var bottomAxis = d3.axisBottom(newXScale);
 
@@ -62,7 +62,7 @@ function renderXAxis(newXScale, xAxis) {
   return xAxis;
 }
 
-// Function that updates both axes by clicking on either axis label
+// Function that updates both axes by clicking on either y-axis label
 function renderYAxis(newYScale, yAxis) {
   var leftAxis = d3.axisLeft(newYScale);
 
@@ -124,11 +124,11 @@ function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup) {
 }
 
 // Retrieve data from CSV file and execute the chart
-d3.csv("/data/data.csv").then(function(healthData, err) {
+d3.csv("/assets/data/data.csv").then(function(censusData, err) {
   if (err) throw err;
 
   // Parse the data
-  healthData.forEach(function(data) {
+  censusData.forEach(function(data) {
     data.poverty = +data.poverty;
     data.healthcare = +data.healthcare;
     data.age = +data.age;
@@ -136,10 +136,10 @@ d3.csv("/data/data.csv").then(function(healthData, err) {
     });
 
   // xLinearScale function
-  var xLinearScale = xScale(healthData, chosenXAxis);
+  var xLinearScale = xScale(censusData, chosenXAxis);
 
   // yLinearScale function
-  var yLinearScale = yScale(healthData, chosenYAxis);
+  var yLinearScale = yScale(censusData, chosenYAxis);
   
   // Create initial axis functions
   var bottomAxis = d3.axisBottom(xLinearScale);
@@ -159,7 +159,7 @@ d3.csv("/data/data.csv").then(function(healthData, err) {
     
   // Append initial circles
   var circlesGroup = chartGroup.selectAll("circle")
-    .data(healthData)
+    .data(censusData)
     .enter()
     .append("circle")
     .attr("cx", d => xLinearScale(d[chosenXAxis]))
@@ -225,7 +225,7 @@ d3.csv("/data/data.csv").then(function(healthData, err) {
         console.log(chosenXAxis);
 
         // Update the xScale for new data
-        xLinearScale = xScale(healthData, chosenXAxis);
+        xLinearScale = xScale(censusData, chosenXAxis);
 
         // Update x-axis with transition
         xAxis = renderXAxis(xLinearScale, xAxis);
@@ -269,7 +269,7 @@ d3.csv("/data/data.csv").then(function(healthData, err) {
       console.log(chosenYAxis);
 
       // Update the xScale for new data
-      yLinearScale = yScale(healthData, chosenyAxis);
+      yLinearScale = yScale(censusData, chosenyAxis);
 
       // Update x-axis with transition
       yAxis = renderyAxis(yLinearScale, yAxis);
