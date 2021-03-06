@@ -73,7 +73,7 @@ function renderYAxis(newYScale, yAxis) {
   return yAxis;
 }
 
-// Function that updates circles group with a transition to new circles
+// Function that updates circlesGroup with a transition to new circles
 function renderCircles(circlesGroup, newXScale, chosenXAxis, newYScale, chosenYAxis) {
   
   circlesGroup.transition()
@@ -84,6 +84,7 @@ function renderCircles(circlesGroup, newXScale, chosenXAxis, newYScale, chosenYA
   return circlesGroup;
 }
 
+// Function that updates the textsGroup with a transition to new circles
 function renderTexts(textsGroup, newXScale, chosenXAxis, newYScale, chosenYAxis) {
   
   textsGroup.transition()
@@ -144,7 +145,7 @@ d3.csv("assets/data/data.csv").then(function(censusData, err) {
     .attr("cx", d => xLinearScale(d[chosenXAxis]))
     .attr("cy", d => yLinearScale(d[chosenYAxis]))
     .attr("r", 10)
-    .attr("fill", "blue")
+    .attr("fill", "lightblue")
     .attr("opacity", ".5")
     .on("mouseover", function(data) {
       toolTip.show(data, this);
@@ -158,11 +159,11 @@ d3.csv("assets/data/data.csv").then(function(censusData, err) {
     .data(censusData)
     .enter()
     .append("text")
+    .attr("text-anchor", "middle")
+    .attr("font-size", "12px")
     .attr("x", d => xLinearScale(d[chosenXAxis]))
     .attr("y", d => yLinearScale(d[chosenYAxis]))
-    .text(function(d) {
-      return d.abbr;
-    });
+    .text(d => d.abbr);
 
   // Create group for two x-axis labels
   var xLabelsGroup = chartGroup.append("g")
@@ -170,7 +171,7 @@ d3.csv("assets/data/data.csv").then(function(censusData, err) {
     
   // Create group for two y-axis labels
   var yLabelsGroup = chartGroup.append("g")
-    .attr("transform", "rotate(-90)")
+    .attr("transform", "rotate(-90)");
     
   // Append poverty label on x-axis
   var povertyLabel = xLabelsGroup.append("text")
