@@ -14,7 +14,7 @@ var height = svgHeight - margin.top - margin.bottom;
 
 // SVG wrapper
 var svg = d3
-  .select("#chart")
+  .select("#scatter")
   .append("svg")
   .attr("width", svgWidth)
   .attr("height", svgHeight)
@@ -124,7 +124,7 @@ function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup) {
 }
 
 // Retrieve data from CSV file and execute the chart
-d3.csv("/assets/data/data.csv").then(function(censusData, err) {
+d3.csv("assets/data/data.csv").then(function(censusData, err) {
   if (err) throw err;
 
   // Parse the data
@@ -166,8 +166,16 @@ d3.csv("/assets/data/data.csv").then(function(censusData, err) {
     .attr("cy", d => yLinearScale(d[chosenYAxis]))
     .attr("r", 10)
     .attr("fill", "blue")
-    .attr("text", d => d.abbr)
     .attr("opacity", ".5");
+
+  // Append state abbreviations as text to circles
+  circlesGroup.selectAll("text")
+    .data(censusData)
+    .enter()
+    .append("text")
+    .text(function(d) {
+      return d.abbr;
+    })
 
   // Create group for two x-axis labels
   var xLabelsGroup = chartGroup.append("g")
@@ -203,8 +211,8 @@ d3.csv("/assets/data/data.csv").then(function(censusData, err) {
     
   // Append smokes label on y-axis
   var smokesLabel = yLabelsGroup.append("text")
-    .attr("x", 0 - 120)
-    .attr("y", 0 - (height/2))
+    .attr("y", 0 - 120)
+    .attr("x", 0 - (height/2))
     .attr("value", "smokes")
     .classed("inactive", true)
     .text("Smokes (%)")
