@@ -226,7 +226,7 @@ d3.csv("assets/data/data.csv").then(function(censusData, err) {
     .attr("x", 0 - (height/2))
     .attr("value", "obesity")
     .classed("inactive", true)
-    .text("Obesity (%)")
+    .text("Obese (%)")
 
   // X-axis labels event listener
   xLabelsGroup.selectAll("text")
