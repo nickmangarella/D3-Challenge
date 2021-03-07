@@ -148,7 +148,7 @@ d3.csv("assets/data/data.csv").then(function(censusData, err) {
     .append("circle")
     .attr("cx", d => xLinearScale(d[chosenXAxis]))
     .attr("cy", d => yLinearScale(d[chosenYAxis]))
-    .attr("r", 10)
+    .attr("r", 12)
     .attr("fill", "lightblue")
     .attr("opacity", "1.5")
     .on("mouseover", function(data) {
