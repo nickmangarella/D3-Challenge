@@ -171,11 +171,11 @@ d3.csv("assets/data/data.csv").then(function(censusData, err) {
     .attr("text-anchor", "middle")
     .attr("alignment-baseline", "central");
 
-  // Create group for two x-axis labels
+  // Create group for three x-axis labels
   var xLabelsGroup = chartGroup.append("g")
     .attr("transform", `translate(${width / 2}, ${height + 20})`);
     
-  // Create group for two y-axis labels
+  // Create group for three y-axis labels
   var yLabelsGroup = chartGroup.append("g")
     .attr("transform", "rotate(-90)");
     
