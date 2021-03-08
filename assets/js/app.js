@@ -17,9 +17,7 @@ var svg = d3
   .select("#scatter")
   .append("svg")
   .attr("width", svgWidth)
-  .attr("height", svgHeight)
-
-  
+  .attr("height", svgHeight);
 
 // Append an SVG group
 var chartGroup = svg.append("g")
@@ -41,7 +39,7 @@ function xScale(censusData, chosenXAxis) {
   return xLinearScale;
 }
 
-// Function that updates the y-scale by clicking on the axis label
+// Function that updates the y-scale by 
 function yScale(censusData, chosenYAxis) {
     
   // Create scale for y axis
@@ -53,7 +51,7 @@ function yScale(censusData, chosenYAxis) {
   return yLinearScale;
 }
 
-// Function that updates x-axis by clicking on either y-axis label
+// Function that updates x-axis with a transition
 function renderXAxis(newXScale, xAxis) {
   var bottomAxis = d3.axisBottom(newXScale);
 
@@ -64,7 +62,7 @@ function renderXAxis(newXScale, xAxis) {
   return xAxis;
 }
 
-// Function that updates yaxis by clicking on either y-axis label
+// Function that updates y-axis with a transition
 function renderYAxis(newYScale, yAxis) {
   var leftAxis = d3.axisLeft(newYScale);
 
@@ -97,6 +95,7 @@ function renderTexts(textsGroup, newXScale, chosenXAxis, newYScale, chosenYAxis)
   return textsGroup;
 }
 
+// Grab the d3-tip class from the CSS for display of data corresponding to each circle
 var toolTip = d3.tip()
     .attr("class", "d3-tip")
     .offset([80, -60])
