@@ -1,4 +1,4 @@
-# D3-Challenge
+# census-d3.js
 
 ## Description
 Using D3.js and HTML to create a dynamic scatter plot based on data from the U.S. Census Bureau and the Behavioral Risk Factor Surveillance System. The data is based on 2014 ACS 1-year estimates from (https://data.census.gov/cedsci/).
